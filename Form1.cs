@@ -25,11 +25,10 @@ namespace json_emoji
 
             string contentJs = File.ReadAllText("smiley_content.json");
 
-            return dataJS.Deserialize<List<Root>>(contentJs);            
-
-
+            return dataJS.Deserialize<List<Root>>(contentJs);       
 
         }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -42,17 +41,46 @@ namespace json_emoji
         {
             foreach (Root item in lisT)
             {
-                Label lbl = new Label() (Text = item.category);
+                Label lbl = new Label() { Text = item.category };
                 lbl.AutoSize = false;
                 lbl.Width = this.ClientSize.Width;
                 lbl.TextAlign = ContentAlignment.MiddleCenter;
                 lbl.Margin = new Padding(0, 20, 0, 20);
                 flowLayoutPanel1.SetFlowBreak(lbl, true);
+                flowLayoutPanel1.Controls.Add(lbl);
 
-
+                DisplayItems(item);
 
             }
 
+        }
+
+        private void DisplayItems(Root item)
+        {
+
+            foreach (Item itm in item.items)
+            {
+                Button btn = new Button();
+                btn.Text = itm.art + Environment.NewLine + itm.name;
+                btn.Padding = new Padding(5);
+                btn.Width = flowLayoutPanel1.ClientSize.Width / 2 - 10;
+                btn.Height = 80;
+                btn.Click += Btn_click;
+                flowLayoutPanel1.Controls.Add(btn);
+
+            }
+            Label empty = new Label() { Text = " " };
+            flowLayoutPanel1.SetFlowBreak(empty, true);
+
+
+        }
+
+        private void Btn_click(object sender, EventArgs e)
+        {
+            Button clickedButton = (Button)sender;
+            string[] inf = clickedButton.Text.Split('\n');
+            Clipboard.SetText(inf[0]);
+            MessageBox.Show(clickedButton.Text + "has copied to clipboard");
         }
     }
 }

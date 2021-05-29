@@ -63,7 +63,7 @@ namespace json_emoji
                 Button btn = new Button();
                 btn.Text = itm.art + Environment.NewLine + itm.name;
                 btn.Padding = new Padding(5);
-                btn.Width = flowLayoutPanel1.ClientSize.Width / 2 - 10;
+                btn.Width = flowLayoutPanel1.ClientSize.Width / 3 - 10;
                 btn.Height = 80;
                 btn.Click += Btn_click;
                 flowLayoutPanel1.Controls.Add(btn);
